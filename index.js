@@ -1,19 +1,17 @@
 const express = require("express");
-const path = require("path");
-
-const publicPath = path.join(__dirname, "public");
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.sendFile(`${publicPath}/home.html`); // /
-});
-app.get("/about", (req, res) => {
-  res.sendFile(`${publicPath}/about.html`); // localhost:3000/about
-});
-app.get("*", (req, res) => {
-  res.sendFile(`${publicPath}/notfound.html`); // localhost:3000/about
-});
+const requestAge = (req, res, next) => {
+  if (!req.query.age) {
+    res.send("Please provide age");
+  } else if (req.query.age < 18) {
+    res.send("You are underage  ");
+  } else res.send("Hello world!");
+  next();
+};
+
+app.use(requestAge);
 
 app.listen(3000);
 
