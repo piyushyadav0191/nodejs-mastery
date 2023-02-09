@@ -2,16 +2,29 @@ const express = require("express");
 const app = express();
 
 app.get("/", (req, res) => {
-  console.log("data send by browser is", req.query.name); // http:localhost:5000?name=piyush
-  res.send(`Hello ${req.query.name}`);
+  res.send(`<h1>Hello world!</h1>, <a href="/about">go to about page </a> `);
 });
 app.get("/about", (req, res) => {
-  res.send("From about Page!");
+  res.send(`<input type="text" placeholder="enter your name" />`);
+});
+app.get("/help", (req, res) => {
+  res.send([
+    {
+      name: "Piyush",
+      email: "piyush123@gmail.com",
+    },
+    {
+      name: "sam",
+      email: "sam@gmail.com",
+    },
+  ]);
 });
 
-app.listen(5000, () => {
-  console.log("Server is running");
+const PORT = 5000;
+
+app.listen(PORT, () => {
+  console.log(`server is running at port ${PORT}`);
 });
 
 // what we covered
-// make file, read file, rename, delete
+// how html tags, json data, link pages
