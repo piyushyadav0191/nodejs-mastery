@@ -1,17 +1,11 @@
 const express = require("express");
+const path = require("path");
 const app = express();
+const publicPath = path.join(__dirname, "public");
 
-app.get("/", (req, res) => {
-  console.log("data send by browser is", req.query.name); // http:localhost:5000?name=piyush
-  res.send(`Hello ${req.query.name}`);
-});
-app.get("/about", (req, res) => {
-  res.send("From about Page!");
-});
+app.use(express.static(publicPath)); //localhost:3000/about.html or localhost:3000/home.html
 
-app.listen(5000, () => {
-  console.log("Server is running");
-});
+app.listen(3000);
 
 // what we covered
-// make file, read file, rename, delete
+// make html files and load html files
