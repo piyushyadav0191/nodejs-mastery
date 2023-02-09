@@ -1,16 +1,24 @@
 const fs = require("fs");
 const path = require("path");
-const dirPath = path.join(__dirname, "files");
-// console.log(dirPath); /home/piyush/Desktop/nodejs-tutorial/files
+const dirPath = path.join(__dirname, "crud");
+const filePath = `${dirPath}/apple.txt`;
 
-for (let i = 0; i < 5; i++) {
-  fs.writeFileSync(`${dirPath}/hello${i}.txt`, "Aweosme file created ");
-}
-
-fs.readdir(dirPath, (err, files) => {
-  files.forEach((item) => {
-    console.log(`file name is ${item}`);
-  });
+fs.writeFileSync(filePath, "This is a simple Text");
+fs.readFile(filePath, "utf8", (err, item) => {
+  console.log(item);
 });
+
+fs.appendFile(filePath, "add file name in apple.txt", (err) => {
+  if (!err) console.log("file is updated");
+});
+fs.appendFile(filePath, "add file again name in apple.txt", (err) => {
+  if (!err) console.log("file is updated");
+});
+
+fs.rename(filePath, `${dirPath}/fruit.txt`, (err) => {
+  if (!err) console.log("File is renamed");
+});
+
+fs.unlinkSync(`${dirPath}/fruit.txt`);
 // what we covered
-//make file in folder,use path module , get files name and print
+// make file, read file, rename, delete
