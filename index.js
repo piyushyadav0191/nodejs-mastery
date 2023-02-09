@@ -1,11 +1,21 @@
 const express = require("express");
 const path = require("path");
-const app = express();
+
 const publicPath = path.join(__dirname, "public");
 
-app.use(express.static(publicPath)); //localhost:3000/about.html or localhost:3000/home.html
+const app = express();
+
+app.get("/", (req, res) => {
+  res.sendFile(`${publicPath}/home.html`); // /
+});
+app.get("/about", (req, res) => {
+  res.sendFile(`${publicPath}/about.html`); // localhost:3000/about
+});
+app.get("*", (req, res) => {
+  res.sendFile(`${publicPath}/notfound.html`); // localhost:3000/about
+});
 
 app.listen(3000);
 
 // what we covered
-// make html files and load html files
+// apply get method, remove extension from url, make 404 page, apply 404 page
