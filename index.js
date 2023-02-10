@@ -1,19 +1,28 @@
-const express = require("express");
+const { MongoClient } = require("mongodb");
+const uri =
+  "mongodb+srv://piyushyadav0191:<password>@cluster0.w1hdxig.mongodb.net/?retryWrites=true&w=majority";
+// for password ASCII
+//   @ = %40
+// ' = %27
+// ! = %21
+// # = %23
+const client = new MongoClient(uri);
 
-const app = express();
+const dbName = "nodemaster";
 
-const requestAge = (req, res, next) => {
-  if (!req.query.age) {
-    res.send("Please provide age");
-  } else if (req.query.age < 18) {
-    res.send("You are underage  ");
-  } else res.send("Hello world!");
-  next();
-};
+async function main() {
+  // Use connect method to connect to the server
+  await client.connect();
+  console.log("Connected successfully to server");
+  const db = client.db(dbName);
+  const collection = db.collection("test");
+  let response = await collection.find({}).toArray();
+  console.log(response);
+}
 
-app.use(requestAge);
-
-app.listen(3000);
-
+main()
+  .then(console.log)
+  .catch(console.error)
+  .finally(() => client.close());
 // what we covered
-// apply get method, remove extension from url, make 404 page, apply 404 page
+// connected to mongodb, show data from mongodb
